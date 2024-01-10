@@ -1,0 +1,148 @@
+.login{
+    
+    height: 100vh;
+    background-color: rgb(165, 173, 238);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .card{
+
+        width: 50%;
+        display: flex;
+        // flex-wrap: wrap;
+        // border: 2px solid red;
+        border-radius: 10px;
+        height: 550px;
+        overflow: hidden;
+        
+
+        .left{
+
+            background: linear-gradient(rgba(43, 39, 109, 0.5),rgba(16, 4, 43, 0.5)) ,url("../../assets/im2.jpg") center;
+            background-size: cover;
+            padding: 50px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            // justify-content: center;
+            gap: 0px;
+            color: white;
+
+            h1{
+                // margin-top: 0;
+                // margin-bottom: 0;
+                font-size: 70px;
+                line-height: 70px;
+                // border: 2px solid black;
+            }
+            p{
+                margin-top: 0;
+                // border: 2px solid rgb(138, 43, 43);
+            }
+            span{
+                padding:15px 0;
+                font-size: 18px;
+            }
+            button{
+                width: 50%;
+                border: none;
+                padding: 14px;
+                background-color: white;
+                color: rgb(19, 9, 160);
+                font-size: 15px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+
+        .right{
+
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 30px;
+            background-color: white;
+            
+            h1{
+
+            }
+            form{
+                // border: 2px solid red;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                input{
+                    border: none;
+                    border-bottom: 1px solid lightgray;
+                    padding: 10px 10px;
+                }
+
+            }
+
+            button{
+                width: 50%;
+                border: none;
+                background-color: rgb(97, 90, 197);
+                color: white;
+                padding: 14px;
+                font-size: 15px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------
+//practice purpose..
+
+
+// $container-back-color : orange;
+
+// $break-points : (
+//     xs : 0px,
+//     sm : 500px,
+//     md : 700px,
+//     lg : 900px,
+//     xl : 1100px,
+//     xxl : 1500
+// );
+
+// .container{
+//     width: 50%;
+//     height: 30rem;
+//     border: 2px solid rgb(117, 117, 117);
+//     margin: auto;
+//     background-color: $container-back-color;
+// }
+
+
+
+// @media only screen and (min-width: map-get($break-points,xs)){
+//     .container{
+//         width: 100%;
+//     }
+// }
+
+// @media only screen and (min-width: map-get($break-points,sm)){
+//     .container{
+//         width: 80%;
+//     }
+// }
+
+// @media only screen and (min-width: map-get($break-points,md)){
+//     .container{
+//         width: 50%;
+//     }
+// }

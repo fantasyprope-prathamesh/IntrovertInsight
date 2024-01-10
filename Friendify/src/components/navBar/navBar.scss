@@ -1,0 +1,86 @@
+@import "../../style.scss";
+
+.navbar {
+  @include themify($theme) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 25px;
+    border-bottom: 1px solid themed("borderSoft");
+    background-color: themed(bg);
+    color: themed("textColor");
+    height: 50px;
+    z-index: 999;
+
+    position: sticky;
+    top: 0;
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      span {
+        font-size: 20px;
+        font-weight: bold;
+        color: themed("logo");
+      }
+
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid themed("borderSoft");
+        padding: 5px;
+        border-radius: 5px;
+
+        input {
+          border: none;
+          width: 500px;
+          background: transparent;
+          outline: none;
+          color: themed("textColor");
+
+          @include mobile {
+            display: none;
+          }
+
+          @include tablets {
+            width: 200px;
+          }
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      @include mobile {
+        display: none;
+      }
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: bold;
+
+        @include tablets {
+          display: none;
+        }
+
+        img {
+          width: 50px;
+          // src: url('../../assets/C++.png');
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        span {
+        }
+      }
+    }
+  }
+}
