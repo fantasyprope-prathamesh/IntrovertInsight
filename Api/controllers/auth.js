@@ -1,15 +1,16 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken"
 
 export const register = (req, res) => {
   //CHECK USER IF EXISTS
-  console.log(req.body);
+  console.log('register details ',req.body);
   const que1 = "SELECT * FROM users WHERE username = ?";
 
   db.query(que1, [req.body.username], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length) {
-      return res.status(409).json("User already exists");
+      return res.status(409).json("User already exists :)");
     } else {
       //CREATE A NEW USER
       //HASH THE PASSWORD..
@@ -46,13 +47,30 @@ export const login = (req, res) => {
 
     if(!checkPassword) {
         return res.status(400).json("Wrong password and User name")
-    }else{
-        return res.json("Right user")
     }
+    // else{
+    //     return res.json("Right user")
+    // }
+
+    //creating jwt token..
+
+    const {password,...others} = result[0];
+
+    const token = jwt.sign({id:result[0].id}, 'secretKey');
+
+    res.cookie('accessToken', token , {
+      httpOnly : true
+    }).status(200).json(others);
 
   })
 };
 
 export const logout = (req, res) => {
   // Implement the logout logic here
+  console.log("logout...")
+  res.clearCookie("accessToken",{
+    secure : true,
+    sameSite : 'none'
+  }).status(200).json("User has been loged out");
+
 };
