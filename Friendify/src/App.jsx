@@ -22,8 +22,6 @@ function App() {
   // const currentUser = true;
   const {currentUser,login} = useContext(AuthContext);
 
-  
-
   const {darkMode} = useContext(DarkModeContext);
   console.log(darkMode);
   

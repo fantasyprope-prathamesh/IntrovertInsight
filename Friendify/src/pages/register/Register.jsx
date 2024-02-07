@@ -55,7 +55,7 @@ const Register = () => {
             <input type="email" placeholder="Email" name="email"  onChange={handleOnChange} />
             <input type="password" placeholder="Password" name="password" onChange={handleOnChange} />
             <input type="text" placeholder="Name" name="name" onChange={handleOnChange} />
-            {/* {err && err} */}
+            {err && err}
           </form>
           <button type="button" onClick={()=>handleClick()}>Register</button>
         </div>
