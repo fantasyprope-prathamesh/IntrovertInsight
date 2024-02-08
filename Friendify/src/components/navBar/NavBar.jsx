@@ -58,10 +58,10 @@ const NavBar = () => {
         <NotificationsOutlinedIcon />
         <div className="user">
         <img
-         src={currentUser ? currentUser.profilePicture : UserImg}
+         src={currentUser ? currentUser.profilePic : UserImg}
         //  src = "chrome-extension://fcejkolobdcfbhhakbhajcflakmnhaff/static/logo.png"
           alt="User Profile" />
-          <span>{currentUser.name}</span>
+          <span>{currentUser.username}</span>
         </div>
       </div>
     </div>

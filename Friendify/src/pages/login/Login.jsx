@@ -1,9 +1,11 @@
 import React, { useContext , useState } from "react";
 import "./login.scss";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   const [input,setInput] = useState({
     username : '',
@@ -31,9 +33,13 @@ const Login = () => {
   const handleLogin = async (e)=>{
     // e.preventDefault();
     try{
+      console.log("i am trying")
       await login(input)
-    }catch(err){
-      setErr(err.response.data);
+      
+      navigate('/')
+    }catch(erro){
+      setErr(erro.response.data);
+      console.log('my error : ', erro.response.data)
     }
   }
   
@@ -62,7 +68,7 @@ const Login = () => {
             <input type="password" placeholder="Password" name="password" onChange={handleOnChange} />
             {err && err}
           </form>
-          <button type="button" onClick={()=>handleLogin()}>Login</button>
+          <button type="button" onClick={handleLogin}>Login</button>
         </div>
       </div>
     </div>
