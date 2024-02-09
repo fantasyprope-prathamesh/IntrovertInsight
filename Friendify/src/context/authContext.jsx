@@ -21,6 +21,7 @@ export const AuthContextProvider = ({ children }) => {
 
     // setCurrentUser({id:1,name:"Patil",profilePicture:"chrome-extension://fcejkolobdcfbhhakbhajcflakmnhaff/static/logo.png"})
   };
+  
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
