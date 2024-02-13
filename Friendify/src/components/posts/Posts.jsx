@@ -4,6 +4,7 @@ import "./posts.scss";
 import Post from "../post/Post";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequestt } from "../../axios";
+import Share from "../share/Share";
 
 const Posts = () => {
   // const posts = [
@@ -39,20 +40,25 @@ const Posts = () => {
   //     });
   //   }
   // );
-  
 
+  const [data, setData] = useState([]);
 
-  const [data,setData] = useState([])
-  useEffect(() => {
-    // console.log("heyyy")
-    axios.get('http://localhost:8005/api/posts',{withCredentials:true})
+  const fetchData = () => {
+    axios
+      .get("http://localhost:8005/api/posts", { withCredentials: true })
       .then((res) => {
         console.log("finally : ", res.data);
-        setData(res.data); // Update state with received data
-      }).catch((err) => {
-        // console.error("Error:", err);
+        const sortedDataDescending = res.data.sort((a, b) => b.id - a.id);
+
+        setData(sortedDataDescending); // Update state with received data
+      })
+      .catch((err) => {
+        console.error("Error:", err);
       });
-  }, []); // Dependency array should be passed here
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // const { isPending, error, data } = useQuery({
   //   queryKey: ['posts'],
@@ -83,13 +89,24 @@ const Posts = () => {
 
   console.log("query data new : ", data);
 
+  const changeData = () => {
+    fetchData();
+  };
+
   return (
-    <div className="posts">
-      {/* error ? "Something Went Wrong" : isPending ? "Loading.."  : */}
-      {data?.map((post, indx) => {
-        return <Post post={post} key={post.id} />;
-      })}
-    </div>
+    <>
+      {/* share */}
+      <div>
+        <Share onChangeData={changeData}/>
+      </div>
+      {/* posts */}
+      <div className="posts">
+        {/* error ? "Something Went Wrong" : isPending ? "Loading.."  : */}
+        {data?.map((post, indx) => {
+          return <Post post={post} key={post.id} />;
+        })}
+      </div>
+    </>
   );
 };
 
