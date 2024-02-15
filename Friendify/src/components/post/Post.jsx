@@ -7,6 +7,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Link } from "@mui/material";
 import Comments from "../comments/Comments";
+import moment from 'moment'
 
 const Post = ({post}) => {
 
@@ -24,7 +25,7 @@ const Post = ({post}) => {
                 <Link className="name" to={`/profile/${post.id}`} style={{textDecoration:"none",color:"inherit"}}>
                     <span>{post.userName}</span>  
                 </Link>
-                <span className="date">1 min ago</span>
+                <span className="date">{moment(post.createdAt).fromNow()}</span>
             </div>
         </div>
         <MoreHorizOutlinedIcon/>
@@ -33,7 +34,7 @@ const Post = ({post}) => {
 
       <div className="content">
         <p>{post.descr}</p>
-        <img src={post.image} alt="User"/>
+        <img src={"./upload/"+post.image} alt="User"/>
       </div>
 
       <div className="info">

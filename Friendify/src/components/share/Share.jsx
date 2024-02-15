@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./share.scss";
 import { AuthContext } from "../../context/authContext";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -13,25 +13,57 @@ const Share = ({onChangeData}) => {
   const [file, setFile] = useState();
   const [desc, setDesc] = useState();
 
-  console.log("desc : ", desc);
-
-  const newPostData = {
-    descr : desc,
-    image : "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600"
+  //upload function..
+  const upload = async ()=>{
+    try{
+      const formData = new FormData();
+      formData.append("file",file);
+      const res = await axios.post("http://localhost:8005/api/upload",formData);
+      // console.log("new url : ", res)
+      return res.data;
+    }catch(err){
+      console.log(err);
+    }
   }
 
+  // console.log("desc : ", desc);
+
   //handle click..
-  const handleClick = (e)=>{
+  const handleClick = async (e)=>{
     e.preventDefault();
+
+    let imgUrl = "";
+    if(file){
+      imgUrl = await upload();
+      // console.log("imgUrl : ",imgUrl);
+    }
+
+    const newPostData = {
+      descr : desc,
+      image : imgUrl
+    }
+
+    console.log("newPostData : ",newPostData);
 
     axios.post("http://localhost:8005/api/addPost",newPostData,{withCredentials:true})
     .then((res)=>{
       console.log("new post res:",res.data);
+      setFile("");
+      setDesc("");
+      onChangeData();
     }).catch((err)=>{
       console.log('err: ',err);
     })
 
-    onChangeData();
+    
+  }
+
+  //=================================================================
+
+  const fileInputRef = useRef(null);
+
+  const handleAddImageClick = ()=>{
+    fileInputRef.current.click();
   }
 
   return (
@@ -39,6 +71,7 @@ const Share = ({onChangeData}) => {
       <div className="share">
         <div className="container">
           <div className="content-section">
+            <div className="left">
             <img src={currentUser.profilePic} alt="" />
             <input
               type="text"
@@ -46,12 +79,18 @@ const Share = ({onChangeData}) => {
               onChange={(e) => {
                 setDesc(e.target.value);
               }}
+              value={desc}
             />
+            </div>
+            <div className="right">
+              { file && <img className="file" src={URL.createObjectURL(file)} />}
+            </div>
           </div>
           <input
                 type="file"
                 id="file"
-                style={{ display: "none" }}
+                style={{display: "none" }}
+                ref={fileInputRef}
                 onChange={(e) => {
                   setFile(e.target.files[0]);
                 }}
@@ -64,7 +103,7 @@ const Share = ({onChangeData}) => {
                 <div className="icon">
                   <AddPhotoAlternateIcon />
                 </div>
-                <p>Add Image</p>
+                <p onClick={handleAddImageClick} style={{cursor:"pointer"}}>Add Image</p>
               </div>
               <div className="item">
                 <div className="icon">

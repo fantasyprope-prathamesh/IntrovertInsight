@@ -66,8 +66,7 @@ export const addPost = (req, res) => {
 
     const values = [
       req.body.descr,
-      // req.body.image,
-      "",
+      req.body.image,
       moment(Date.now()).format("YYYY-MM-DD HH:MM:SS"),
       userInfo.id,
     ];

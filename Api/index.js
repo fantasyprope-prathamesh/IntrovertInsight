@@ -44,6 +44,7 @@ import commentRouter from "./routes/comments.js";
 import authRouter from "./routes/auth.js";
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import multer from "multer";
 
 const app = express();
 const PORT = 8005;
@@ -58,6 +59,27 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
+
+
+//multer..\-------------------------------------------------------
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../Friendify/public/upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  }
+})
+
+const upload = multer({ storage: storage })
+
+app.post("/api/upload",upload.single("file"),(req,res)=>{
+  const file = req.file;
+  res.status(200).json(file.filename);
+})
+
+//================================================================
 
 // No need to manually set the Access-Control-Allow-Origin header, as the cors middleware handles it.
 
