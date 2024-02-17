@@ -38,8 +38,8 @@ const Login = () => {
       
       navigate('/')
     }catch(erro){
-      setErr(erro.response.data);
-      console.log('my error : ', erro.response.data)
+      setErr(erro.response);
+      console.log('my error : ', erro.response)
     }
   }
   

@@ -61,7 +61,7 @@ app.use(cors({
 app.use(cookieParser());
 
 
-//multer..\-------------------------------------------------------
+//multer..\-------------------------------------------------------------------------
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -79,7 +79,7 @@ app.post("/api/upload",upload.single("file"),(req,res)=>{
   res.status(200).json(file.filename);
 })
 
-//================================================================
+//====================================================================================
 
 // No need to manually set the Access-Control-Allow-Origin header, as the cors middleware handles it.
 

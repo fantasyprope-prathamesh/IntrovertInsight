@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./comments.scss";
 import {AuthContext} from '../../context/authContext'
+import axios from "axios";
 
-const Comments = () => {
+const Comments = ({postId}) => {
 
   const {currentUser} = useContext(AuthContext);
 
@@ -26,13 +27,44 @@ const Comments = () => {
     },
   ];
 
+  //handle send commennt function..
+  const [commentData ,setCommentData] = useState({
+    descr : "",
+    commentUserId : currentUser.id,
+    postId : postId
+  }) 
+
+  useEffect(()=>{
+    console.log("comment data : ",commentData);
+  },[commentData])
+
+  const handleSendComment = ()=>{
+    
+    axios.post("http://localhost:8005/api/addComment",commentData,{withCredentials:true})
+    .then((res)=>{
+      if(res){
+        console.log(res.data);
+      }
+    })
+    .catch((err)=>{
+      console.log("comment err:",err);
+    })
+  }
+
   return(
     <div className="comments">
     {/* input section */}
       <div className="write">
         <img src={currentUser.profilePicture} alt="user" />
-        <input type="text" placeholder="Add comment..." />
-        <button>Send</button>
+        <input type="text" placeholder="Add comment..." onChange={(e)=>{
+          setCommentData((pre)=>{
+            return {
+              ...pre,
+              descr : e.target.value
+            }
+          })
+        }} />
+        <button onClick={handleSendComment}>Send</button>
       </div>
 
     {/* comment section  */}

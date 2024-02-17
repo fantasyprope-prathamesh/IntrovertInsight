@@ -53,7 +53,7 @@ const Post = ({post}) => {
       </div>
 
       {
-        commentOpen && <Comments/>
+        commentOpen && <Comments postId={post.id}/>
       }
     </div>
   );
