@@ -31,3 +31,25 @@ export const addComment = (req, res) => {
     });
 };
 
+
+///get comments..
+
+export const getComments = (req,res)=>{
+
+    console.log("ewwww")
+
+    // return res.json("sever sended response")
+    const que =
+      "SELECT c.id as id, c.descr as descr , c.createdAt as createdAt , u.username as username , u.profilePic as profilePic FROM comments as c JOIN users as u  ON (c.commentUserId = u.id) WHERE c.postId = ? ORDER BY c.createdAt DESC ";
+
+    console.log("hey there id me: ", req.params.postId);
+
+    db.query(que, [req.params.postId], (err, data) => {
+      if (err) {
+        console.error("Database Error:", err.message);
+        return res.status(500).json({ error: "Internal Server Error yy" });
+      }
+      console.log("Fetched Comments:", data);
+      return res.status(200).json(data);
+    }); 
+}
