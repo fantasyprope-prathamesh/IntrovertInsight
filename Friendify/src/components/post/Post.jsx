@@ -8,13 +8,14 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Link } from "@mui/material";
 import Comments from "../comments/Comments";
 import moment from 'moment'
+import { red } from "@mui/material/colors";
 
 const Post = ({post}) => {
 
   const [commentOpen,setCommentOpen] = useState(false);
 
   //TEMPORARY..
-  const liked = true;
+  const liked = false;
 
   return (
     <div className="post">
@@ -39,7 +40,7 @@ const Post = ({post}) => {
 
       <div className="info">
       <div className="item">
-      {liked?<FavoriteOutlinedIcon/> :<FavoriteBorderOutlinedIcon/>}
+      {liked?<FavoriteOutlinedIcon style={{color:'red'}}/> :<FavoriteBorderOutlinedIcon style={{color:'red'}}/>}
       12 Likes
       </div>
       <div className="item">

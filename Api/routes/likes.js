@@ -1,8 +1,9 @@
 import express from 'express'
-import { } from '../controllers/likes.js'
+import { addLike,getLikes } from '../controllers/likes.js'
 
 const router = express.Router();
 
-router.get("");
+router.post("/api/addLike",addLike);
+router.get( "/api/getLikes",getLikes)
 
 export default router;
