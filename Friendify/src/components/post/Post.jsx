@@ -11,6 +11,7 @@ import moment from "moment";
 import { red } from "@mui/material/colors";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -18,6 +19,7 @@ const Post = ({ post }) => {
 
   //TEMPORARY..
   const liked = false;
+  const navigate = useNavigate();
 
   //---------------------------------------------------------------------------------------------------
 
@@ -90,7 +92,7 @@ const Post = ({ post }) => {
     <div className="post">
       <div className="user">
         <div className="userinfo">
-          <img src={post.userProfilePic} alt="User" />
+          <img src={post.userProfilePic} alt="User" onClick={()=>navigate('/profile/'+post.userId)} />
           <div className="details">
             <Link
               className="name"

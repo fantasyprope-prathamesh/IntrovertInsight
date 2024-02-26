@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import "./posts.scss";
 import Post from "../post/Post";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequestt } from "../../axios";
 import Share from "../share/Share";
+import { AuthContext } from "../../context/authContext";
 
-const Posts = () => {
+const Posts = ({ guestUser }) => {
   // const posts = [
   //   {
   //     id: 1,
@@ -42,6 +43,7 @@ const Posts = () => {
   // );
 
   const [data, setData] = useState([]);
+  const { currentUser, login } = useContext(AuthContext);
 
   const fetchData = () => {
     axios
@@ -93,12 +95,20 @@ const Posts = () => {
     fetchData();
   };
 
+  //---------------------------------------------------------------------------------
+  console.log("guestUserFromPosts : " + guestUser);
+  //--------------------------------------------------------------------------------
+
   return (
     <>
       {/* share */}
-      <div>
-        <Share onChangeData={changeData}/>
-      </div>
+
+      {guestUser && guestUser == currentUser.id && (
+        <Share onChangeData={changeData} />
+      )}
+      {guestUser && guestUser != currentUser.id && null}
+      {guestUser == null && <Share onChangeData={changeData} />}
+
       {/* posts */}
       <div className="posts">
         {/* error ? "Something Went Wrong" : isPending ? "Loading.."  : */}

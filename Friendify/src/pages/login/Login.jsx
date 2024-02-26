@@ -1,48 +1,47 @@
-import React, { useContext , useState } from "react";
+import React, { useContext, useState } from "react";
 import "./login.scss";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 
 const Login = () => {
-
   const navigate = useNavigate();
 
-  const [input,setInput] = useState({
-    username : '',
-    password : '',
-  })
+  const [input, setInput] = useState({
+    username: "",
+    password: "",
+  });
 
   //err state...
-  const [err,setErr] = useState(null);
-
+  const [err, setErr] = useState(null);
 
   //handleinput function..
-  const handleOnChange = (event) =>{
-    setInput((prev)=>{
+  const handleOnChange = (event) => {
+    setInput((prev) => {
       return {
-        ...prev , [event.target.name]: event.target.value
-      }
-    })
-  }
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
 
-  console.log(input)
+  console.log(input);
 
   //--------------------------------------------------------------------------------------------
-  const {currentUser,login}= useContext(AuthContext)
+  const { currentUser, login } = useContext(AuthContext);
 
-  const handleLogin = async (e)=>{
+  const handleLogin = async (e) => {
     // e.preventDefault();
-    try{
-      console.log("i am trying")
-      await login(input)
-      
-      navigate('/')
-    }catch(erro){
+    try {
+      console.log("i am trying");
+      await login(input);
+
+      navigate("/");
+    } catch (erro) {
       setErr(erro.response);
-      console.log('my error : ', erro.response)
+      console.log("my error : ", erro.response);
     }
-  }
-  
+  };
+
   return (
     <div className="login">
       <div className="card">
@@ -64,11 +63,25 @@ const Login = () => {
         <div className="right">
           <h1>Login</h1>
           <form>
-            <input type="text" placeholder="Username" name="username" onChange={handleOnChange} />
-            <input type="password" placeholder="Password" name="password" onChange={handleOnChange} />
-            {err && err}
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={handleOnChange}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={handleOnChange}
+            />
+            {/* {err && err} */}
+            {/* // Inside your Login component */}
+            {err && <p className="error-message">{err.message}</p>}
           </form>
-          <button type="button" onClick={handleLogin}>Login</button>
+          <button type="button" onClick={handleLogin}>
+            Login
+          </button>
         </div>
       </div>
     </div>

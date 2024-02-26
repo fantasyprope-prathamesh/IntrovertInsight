@@ -35,13 +35,30 @@ export const getLikes = (req, res) => {
 
 export const removeLike = (req, res) => {
   console.log(req.body);
-  if(req.body){
-    const que = "DELETE FROM likes WHERE userId = ? AND postId = ?"
 
-    db.query(que,[req.body.userId,req.body.postId],(err,result)=>{
-      if (err) return res.status(400).json("Internal db err!")
+  const token = req.cookies.accessToken;
 
-      return res.status(200).json("Like removed successfully")
-    })
-  }
+  if (!token) return res.status(401).json("Not Logged In!");
+
+  jwt.verify(token, "secretKey", (err, userInfo) => {
+    if (err) return res.status(401).json("Token is not valid!");
+
+    const que = "DELETE FROM likes WHERE userId = ? AND postId = ?";
+
+    db.query(que, [req.body.userId, req.body.postId], (err, result) => {
+      if (err) return res.status(400).json("Internal db err!");
+
+      return res.status(200).json("Like removed successfully");
+    });
+  });
+
+  // if (req.body) {
+  //   const que = "DELETE FROM likes WHERE userId = ? AND postId = ?";
+
+  //   db.query(que, [req.body.userId, req.body.postId], (err, result) => {
+  //     if (err) return res.status(400).json("Internal db err!");
+
+  //     return res.status(200).json("Like removed successfully");
+  //   });
+  // }
 };
