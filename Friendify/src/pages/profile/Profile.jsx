@@ -1,4 +1,4 @@
-import React ,{useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./profile.scss";
 import coverImg from "./cover.jpg";
 import profilePic from "./profile.jpg";
@@ -23,29 +23,57 @@ const Profile = () => {
   console.log("guestUser : " + guestUser);
   //------------------------------------------------------------------------------
 
-  const [profileUser,setProfileUser] = useState();
+  // Ensure profileUser has initial state and coverPic property
+  const [profileUser, setProfileUser] = useState({
+    coverPic: "", // Set an initial value for coverPic
+  });
+
   const fetchUser = (userId)=>{
 
     axios.get(`http://localhost:8005/api/getUser/${userId}`,{withCredentials:true})
     .then((res)=>{
       console.log('From Profile',res.data);
-      setProfileUser(res.data);
+      setProfileUser(res.data[0]);
     })
     .catch((err)=>{
       console.log(err);
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
+    console.log("newwwww");
+
+    // axios
+    //   .get(`http://localhost:8005/api/getUser/${guestUser}`, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     console.log("From Profile", res.data[0].coverPic);
+    //     setProfileUser(res.data[0]);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
     fetchUser(guestUser);
-  },[guestUser])
+  }, [guestUser]);
 
   //--------------------------------------------------------------------------------
   return (
     <div className="profile">
       <div className="images">
-        <img src={profileUser.coverPic} alt="cover" className="cover" />
-        {/* <img src={profileUser.profilePic} alt="profilePic" className="profilePic" /> */}
+        {profileUser && (
+          <img src={profileUser.coverPic} alt="cover" className="cover" />
+        )}
+        {profileUser && (
+          <img
+            src={profileUser.profilePic}
+            alt="profilePic"
+            className="profilePic"
+          />
+        )}
+
+        {/* {profileUser&& <img src={ profileUser.coverPic} alt="cover" className="cover" />} */}
       </div>
 
       <div className="profileContainer">
@@ -65,7 +93,7 @@ const Profile = () => {
             </a>
           </div>
           <div className="center">
-            <span>John Doe</span>
+            <span>{profileUser.username}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
@@ -76,7 +104,9 @@ const Profile = () => {
                 <span>Marathi</span>
               </div>
             </div>
-            <button>Follow</button>
+            {
+              currentUser.id == guestUser ? (<button>Update</button>) : <button>Follow</button>
+            }
           </div>
           <div className="right">
             <EmailIcon />

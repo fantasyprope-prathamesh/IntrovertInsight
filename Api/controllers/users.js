@@ -17,6 +17,8 @@ export const getUser = (req, res) => {
     db.query(que,[req.params.userId],(err,result)=>{
         if(err) return res.status(400).json(err)
 
+        console.log("guest user data : ",result)
+
         return res.status(200).json(result)
     })
   });

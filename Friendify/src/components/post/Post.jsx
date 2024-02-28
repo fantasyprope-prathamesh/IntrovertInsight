@@ -11,7 +11,7 @@ import moment from "moment";
 import { red } from "@mui/material/colors";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -26,6 +26,11 @@ const Post = ({ post }) => {
   const [eachPostData, setEachPostData] = useState([]);
 
   //----------------------------------------------------------------------------------------------------
+
+  const guestUserFromPost = useLocation().pathname.split("/")[2];
+  console.log("guestUser from Post: " + guestUserFromPost);
+
+  //------------------------------------------------------------------------
 
   const fetchLike = ()=>{
     axios
@@ -108,7 +113,7 @@ const Post = ({ post }) => {
       </div>
       <div className="content">
         <p>{post.descr}</p>
-        <img src={"./upload/" + post.image} alt="User" />
+        <img src={"./public/upload/" + post.image} alt="User" />
       </div>
       <div className="info">
         <div className="item">
