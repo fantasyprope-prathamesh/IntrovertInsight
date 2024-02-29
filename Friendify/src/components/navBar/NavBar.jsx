@@ -13,10 +13,12 @@ import UserImg from '../../assets/im2.jpg'
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
+import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
   const { darkMode, toggle } = useContext(DarkModeContext);
   const {currentUser,login} = useContext(AuthContext)
+  const navigate = useNavigate();
 
   useEffect(() => {
     // localStorage.setItem("darkMode", darkMode);
@@ -60,8 +62,8 @@ const NavBar = () => {
         <img
          src={currentUser ? currentUser.profilePic : UserImg}
         //  src = "chrome-extension://fcejkolobdcfbhhakbhajcflakmnhaff/static/logo.png"
-          alt="User Profile" />
-          <span>{currentUser.username}</span>
+          alt="User Profile" onClick={()=>navigate('/')} />
+          <span onClick={()=>navigate('/')}>{currentUser.username}</span>
         </div>
       </div>
     </div>

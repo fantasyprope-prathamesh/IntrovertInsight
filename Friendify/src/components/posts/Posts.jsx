@@ -47,7 +47,7 @@ const Posts = ({ guestUser }) => {
 
   const fetchData = () => {
     axios
-      .get("http://localhost:8005/api/posts", { withCredentials: true })
+      .get("http://localhost:8005/api/posts?guestUserId="+guestUser, { withCredentials: true })
       .then((res) => {
         console.log("finally : ", res.data);
         const sortedDataDescending = res.data.sort((a, b) => b.id - a.id);
@@ -60,7 +60,7 @@ const Posts = ({ guestUser }) => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [guestUser]);
 
   // const { isPending, error, data } = useQuery({
   //   queryKey: ['posts'],
