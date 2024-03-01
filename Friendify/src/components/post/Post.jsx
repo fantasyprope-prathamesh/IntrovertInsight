@@ -97,14 +97,15 @@ const Post = ({ post }) => {
     <div className="post">
       <div className="user">
         <div className="userinfo">
-          <img src={post.userProfilePic} alt="User" onClick={()=>navigate('/profile/'+post.userId)} />
+          <img src={post.userProfilePic} alt="User" onClick={()=>navigate('/profile/'+post.userId)} style={{cursor:'pointer'}} />
           <div className="details">
             <Link
               className="name"
-              to={`/profile/${post.id}`}
-              style={{ textDecoration: "none", color: "inherit" }}
+              // to={`/profile/${post.id}`}
+              onClick={()=>navigate('/profile/'+post.userId)}
+              style={{ textDecoration: "none", color: "inherit",cursor:'pointer' }}
             >
-              <span>{post.userName}</span>
+              <span >{post.userName}</span>
             </Link>
             <span className="date">{moment(post.createdAt).fromNow()}</span>
           </div>

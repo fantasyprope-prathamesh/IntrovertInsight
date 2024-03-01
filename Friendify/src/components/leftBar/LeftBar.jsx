@@ -16,7 +16,7 @@ const LeftBar = () => {
       <div className='container'>
         <div className='menu'>
           <div className='user'>
-            <img src={currentUser.profilePic} alt='user' onClick={()=>navigate('/')} />
+            <img src={currentUser.profilePic} alt='user' onClick={()=>navigate('/profile/'+currentUser.id)} />
             <span onClick={()=>navigate('/')}>{currentUser.username}</span>
           </div>
 

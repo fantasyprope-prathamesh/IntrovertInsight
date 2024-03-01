@@ -14,6 +14,8 @@ import { DarkModeContext } from "../../context/DarkModeContext";
 import { useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 const NavBar = () => {
   const { darkMode, toggle } = useContext(DarkModeContext);
@@ -24,6 +26,23 @@ const NavBar = () => {
     // localStorage.setItem("darkMode", darkMode);
     console.log('cur : ',currentUser);
   }, [currentUser]);
+
+  //-----------------------------------------------------------------------------------
+
+  const clearCookie = () => {
+    // Cookies.remove('accessToken');
+    // Replace "cookieName" with the name of the cookie you want to clear
+    axios.post('http://localhost:8005/api/auth/logout')
+    .then((res)=>{
+      console.log(res);
+      navigate('/login')
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  };
+
+  //---------------------------------------------------------------------------------
 
   return (
     <div className="navbar">
@@ -62,9 +81,10 @@ const NavBar = () => {
         <img
          src={currentUser ? currentUser.profilePic : UserImg}
         //  src = "chrome-extension://fcejkolobdcfbhhakbhajcflakmnhaff/static/logo.png"
-          alt="User Profile" onClick={()=>navigate('/')} />
+          alt="User Profile" onClick={()=>navigate('/profile/'+currentUser.id)} />
           <span onClick={()=>navigate('/')}>{currentUser.username}</span>
         </div>
+        <div style={{padding:'5px 10px',backgroundColor:'blueviolet',borderRadius:'5px',cursor:"pointer"}}  onClick={clearCookie}>Logout</div>
       </div>
     </div>
   );
