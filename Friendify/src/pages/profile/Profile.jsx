@@ -28,35 +28,83 @@ const Profile = () => {
     coverPic: "", // Set an initial value for coverPic
   });
 
-  const fetchUser = (userId)=>{
+  const fetchUser = (userId) => {
+    axios
+      .get(`http://localhost:8005/api/getUser/${userId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("From Profile", res.data);
+        setProfileUser(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-    axios.get(`http://localhost:8005/api/getUser/${userId}`,{withCredentials:true})
-    .then((res)=>{
-      console.log('From Profile',res.data);
-      setProfileUser(res.data[0]);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+  const fetchFollowDetail = () => {
+    const dataObj = { followerId: currentUser.id, followedId: guestUser };
+    console.log("i am in fetchfollowfDetails eww");
+    axios
+      .post("http://localhost:8005/api/relation/followDetails", dataObj, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("follow response", res.data.length);
+        if(res.data.length > 0){
+          SetRelation("Unfollow");
+        }
+        // SetRelation("Unfollow");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
-    console.log("newwwww");
-
-    // axios
-    //   .get(`http://localhost:8005/api/getUser/${guestUser}`, {
-    //     withCredentials: true,
-    //   })
-    //   .then((res) => {
-    //     console.log("From Profile", res.data[0].coverPic);
-    //     setProfileUser(res.data[0]);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     fetchUser(guestUser);
+    // fetchFollowDetail();
   }, [guestUser]);
+
+  useEffect(() => {
+    console.log("champppp");
+    fetchFollowDetail();
+  }, [guestUser]);
+
+  //--------------------------------------------------------------------------------
+  const [relation, SetRelation] = useState("Follow");
+  const handleRelation = () => {
+    console.log("i am in handlerelation");
+    if (relation === "Follow") {
+      axios
+        .post(
+          "http://localhost:8005/api/relation/follow",
+          { followerId: currentUser.id, followedId: guestUser },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log("follow response", res);
+          SetRelation("Unfollow");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }else if(relation === "Unfollow"){
+      axios
+        .post(
+          "http://localhost:8005/api/relation/unfollow",
+          { followerId: currentUser.id, followedId: guestUser },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log("follow response", res);
+          SetRelation("Follow");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   //--------------------------------------------------------------------------------
   return (
@@ -104,9 +152,11 @@ const Profile = () => {
                 <span>Marathi</span>
               </div>
             </div>
-            {
-              currentUser.id == guestUser ? (<button>Update</button>) : <button>Follow</button>
-            }
+            {currentUser.id == guestUser ? (
+              <button>Update</button>
+            ) : (
+              <button onClick={handleRelation}>{relation}</button>
+            )}
           </div>
           <div className="right">
             <EmailIcon />

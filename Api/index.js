@@ -45,6 +45,7 @@ import authRouter from "./routes/auth.js";
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import multer from "multer";
+import relationshipRouter from './routes/relationships.js'
 
 const app = express();
 const PORT = 8005;
@@ -89,6 +90,7 @@ app.use(postRouter);
 app.use(commentRouter);
 app.use(likeRouter);
 app.use(authRouter);
+app.use(relationshipRouter);
 
 app.listen(PORT, () => {
   console.log(`API is running on ${PORT}`);
