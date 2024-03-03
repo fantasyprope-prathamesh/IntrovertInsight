@@ -23,3 +23,30 @@ export const getUser = (req, res) => {
     })
   });
 };
+
+
+export const updateUser = (req,res)=>{
+  console.log(req.body.name);
+
+  const token = req.cookies.accessToken;
+
+  if (!token) return res.status(401).json("Not Logged In!");
+
+  jwt.verify(token, "secretKey", (err, userInfo) => {
+    if (err) return res.status(401).json("Token is not valid!");
+
+    const que = "UPDATE users SET = `username = ?`.`city =?`,`website = ?`,`profilePic = ?`,`coverPic = ?` WHERE id = ?"
+    db.query(que,[
+      req.body.name[0],
+      req.body.city[0],
+      req.body.website[0],
+      req.body.profilePic,
+      req.body.coverPic
+    ],(err,result)=>{
+      if(err) res.status(400).json("internal db errro from updation")
+
+      res.status(200).json("User updated successfully")
+    })
+
+  });
+}

@@ -14,6 +14,7 @@ import Posts from "../../components/posts/Posts";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
+import Update from "../../components/update/Update";
 
 const Profile = () => {
   const { currentUser, login } = useContext(AuthContext);
@@ -27,7 +28,11 @@ const Profile = () => {
   const [profileUser, setProfileUser] = useState({
     coverPic: "", // Set an initial value for coverPic
   });
+  //----------------------------------------------------------------------------
 
+  const [openUpdate,setOpenUpdate] = useState(false);
+
+  //-------------------------------------------------------------------------
   const fetchUser = (userId) => {
     axios
       .get(`http://localhost:8005/api/getUser/${userId}`, {
@@ -153,7 +158,7 @@ const Profile = () => {
               </div>
             </div>
             {currentUser.id == guestUser ? (
-              <button>Update</button>
+              <button onClick={()=>setOpenUpdate(true)}>Update</button>
             ) : (
               <button onClick={handleRelation}>{relation}</button>
             )}
@@ -167,6 +172,10 @@ const Profile = () => {
         {/* posts  */}
         <Posts guestUser={guestUser} />
       </div>
+      {/* update section  */}
+      {
+        openUpdate &&  <Update setOpenUpdate={setOpenUpdate} profileUser={profileUser} /> 
+      }
     </div>
   );
 };
