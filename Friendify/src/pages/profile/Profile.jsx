@@ -33,9 +33,9 @@ const Profile = () => {
   const [openUpdate,setOpenUpdate] = useState(false);
 
   //-------------------------------------------------------------------------
-  const fetchUser = (userId) => {
+  const fetchUser = () => {
     axios
-      .get(`http://localhost:8005/api/getUser/${userId}`, {
+      .get(`http://localhost:8005/api/getUser/${guestUser}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -67,7 +67,7 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    fetchUser(guestUser);
+    fetchUser();
     // fetchFollowDetail();
   }, [guestUser]);
 
@@ -116,11 +116,14 @@ const Profile = () => {
     <div className="profile">
       <div className="images">
         {profileUser && (
-          <img src={profileUser.coverPic} alt="cover" className="cover" />
+          <img src={"/public/upload/" + profileUser.coverPic} alt="cover" className="cover" />
+          // "./public/upload/" + post.image
+          // <h2 style={{color:'white',fontSize:'20px'}}>{profileUser.coverPic}</h2>
+          // IntrovertInsight\Friendify\public\upload\1709477154095Prathamesh Photo.jpg
         )}
         {profileUser && (
           <img
-            src={profileUser.profilePic}
+            src={"/public/upload/" + profileUser.profilePic}
             alt="profilePic"
             className="profilePic"
           />
@@ -146,7 +149,7 @@ const Profile = () => {
             </a>
           </div>
           <div className="center">
-            <span>{profileUser.username}</span>
+            <span>{profileUser && profileUser.username}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
@@ -174,7 +177,7 @@ const Profile = () => {
       </div>
       {/* update section  */}
       {
-        openUpdate &&  <Update setOpenUpdate={setOpenUpdate} profileUser={profileUser} /> 
+        openUpdate &&  <Update setOpenUpdate={setOpenUpdate} profileUser={profileUser} fetchUser={fetchUser} /> 
       }
     </div>
   );

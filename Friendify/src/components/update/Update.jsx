@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./update.scss";
 import axios from "axios";
 
-const Update = ({ setOpenUpdate, profileUser }) => {
+const Update = ({ setOpenUpdate, profileUser, fetchUser }) => {
   const [texts, setTexts] = useState({
     name: "",
     city: "",
@@ -52,6 +52,7 @@ const Update = ({ setOpenUpdate, profileUser }) => {
       .then((res) => {
         console.log("User updated ", res.data);
         setOpenUpdate(false);
+        fetchUser();
       })
       .catch((err) => {
         console.log("Erro from user updation : ", err);

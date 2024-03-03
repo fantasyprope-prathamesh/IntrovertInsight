@@ -32,7 +32,7 @@ const Post = ({ post }) => {
 
   //------------------------------------------------------------------------
 
-  const fetchLike = ()=>{
+  const fetchLike = () => {
     axios
       .get(`http://localhost:8005/api/getLikes/${post.id}`, {
         withCredentials: true,
@@ -44,10 +44,10 @@ const Post = ({ post }) => {
       .catch((err) => {
         console.log("erros : ", err);
       });
-  }
+  };
   useEffect(() => {
     console.log("current user : ", currentUser);
-    fetchLike()
+    fetchLike();
   }, []);
 
   //------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ const Post = ({ post }) => {
         })
         .then((req) => {
           console.log(req.data);
-          fetchLike()
+          fetchLike();
         })
         .catch((err) => {
           console.log(err);
@@ -97,15 +97,24 @@ const Post = ({ post }) => {
     <div className="post">
       <div className="user">
         <div className="userinfo">
-          <img src={post.userProfilePic} alt="User" onClick={()=>navigate('/profile/'+post.userId)} style={{cursor:'pointer'}} />
+          <img
+            src={"/public/upload/" + post.userProfilePic}
+            alt="User"
+            onClick={() => navigate("/profile/" + post.userId)}
+            style={{ cursor: "pointer" }}
+          />
           <div className="details">
             <Link
               className="name"
               // to={`/profile/${post.id}`}
-              onClick={()=>navigate('/profile/'+post.userId)}
-              style={{ textDecoration: "none", color: "inherit",cursor:'pointer' }}
+              onClick={() => navigate("/profile/" + post.userId)}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                cursor: "pointer",
+              }}
             >
-              <span >{post.userName}</span>
+              <span>{post.userName}</span>
             </Link>
             <span className="date">{moment(post.createdAt).fromNow()}</span>
           </div>
@@ -114,7 +123,7 @@ const Post = ({ post }) => {
       </div>
       <div className="content">
         <p>{post.descr}</p>
-        <img src={"./public/upload/" + post.image} alt="User" />
+        <img src={"/public/upload/" + post.image} alt="User" />
       </div>
       <div className="info">
         <div className="item">
@@ -129,20 +138,24 @@ const Post = ({ post }) => {
               onClick={() => checkLikedOrNot(post.id)}
             />
           )}
-          {eachPostData.length}
-          <span>Likes</span>
+          <span style={{ color: "blueviolet",fontSize:'large' }}>{eachPostData.length}</span>
+
+          <span style={{ color: "blueviolet" }}>Likes</span>
         </div>
         <div className="item">
           <TextsmsOutlinedIcon
             onClick={() => {
               setCommentOpen(!commentOpen);
             }}
+            style={{ color: "blueviolet" }}
           />
-          12 Messages
+          <span style={{ color: "blueviolet" }}onClick={() => {
+              setCommentOpen(!commentOpen);
+            }}>12 Messages</span>
         </div>
         <div className="item">
-          <ShareOutlinedIcon />
-          12 Likes
+          <ShareOutlinedIcon style={{ color: "blueviolet" }} />
+          <span style={{ color: "blueviolet" }}>Share</span>
         </div>
       </div>
 

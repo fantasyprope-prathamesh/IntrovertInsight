@@ -79,7 +79,7 @@ const NavBar = () => {
         <NotificationsOutlinedIcon />
         <div className="user">
         <img
-         src={currentUser ? currentUser.profilePic : UserImg}
+         src={currentUser ? "/public/upload/" + currentUser.profilePic : UserImg}
         //  src = "chrome-extension://fcejkolobdcfbhhakbhajcflakmnhaff/static/logo.png"
           alt="User Profile" onClick={()=>navigate('/profile/'+currentUser.id)} />
           <span onClick={()=>navigate('/')}>{currentUser.username}</span>

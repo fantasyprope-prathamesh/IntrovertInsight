@@ -84,7 +84,7 @@ const Comments = ({ postId }) => {
     <div className="comments">
       {/* input section */}
       <div className="write">
-        <img src={currentUser.profilePic} alt="user" />
+        <img src={"/public/upload/" + currentUser.profilePic} alt="user" />
         <input
           type="text"
           placeholder="Add comment..."
@@ -103,7 +103,7 @@ const Comments = ({ postId }) => {
       {/* comment section  */}
       {comments.map((item, indx) => (
         <div className="comment" key={item.id}>
-          <img src={item.profilePic} alt="Message" />
+          <img src={"/public/upload/" + item.profilePic} alt="Message" />
           <div className="info">
             <span>{item.username}</span>
             <p>{item.descr}</p>

@@ -6,7 +6,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import axios from "axios";
 
-const Share = ({onChangeData}) => {
+const Share = ({ onChangeData }) => {
   const { currentUser, login } = useContext(AuthContext);
 
   //states..
@@ -14,57 +14,62 @@ const Share = ({onChangeData}) => {
   const [desc, setDesc] = useState();
 
   //upload function..
-  const upload = async ()=>{
-    try{
+  const upload = async () => {
+    try {
       const formData = new FormData();
-      formData.append("file",file);
-      const res = await axios.post("http://localhost:8005/api/upload",formData);
+      formData.append("file", file);
+      const res = await axios.post(
+        "http://localhost:8005/api/upload",
+        formData
+      );
       // console.log("new url : ", res)
       return res.data;
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   // console.log("desc : ", desc);
 
   //handle click..
-  const handleClick = async (e)=>{
+  const handleClick = async (e) => {
     e.preventDefault();
 
     let imgUrl = "";
-    if(file){
+    if (file) {
       imgUrl = await upload();
       // console.log("imgUrl : ",imgUrl);
     }
 
     const newPostData = {
-      descr : desc,
-      image : imgUrl
-    }
+      descr: desc,
+      image: imgUrl,
+    };
 
-    console.log("newPostData : ",newPostData);
+    console.log("newPostData : ", newPostData);
 
-    axios.post("http://localhost:8005/api/addPost",newPostData,{withCredentials:true})
-    .then((res)=>{
-      console.log("new post res:",res.data);
-      setFile("");
-      setDesc("");
-      onChangeData();
-    }).catch((err)=>{
-      console.log('err: ',err);
-    })
-
-    
-  }
+    axios
+      .post("http://localhost:8005/api/addPost", newPostData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("new post res:", res.data);
+        setFile("");
+        setDesc("");
+        onChangeData();
+      })
+      .catch((err) => {
+        console.log("err: ", err);
+      });
+  };
 
   //=================================================================
 
   const fileInputRef = useRef(null);
 
-  const handleAddImageClick = ()=>{
+  const handleAddImageClick = () => {
     fileInputRef.current.click();
-  }
+  };
 
   return (
     <>
@@ -72,38 +77,38 @@ const Share = ({onChangeData}) => {
         <div className="container">
           <div className="content-section">
             <div className="left">
-            <img src={currentUser.profilePic} alt="" />
-            <input
-              type="text"
-              placeholder={`Whats on your mind ${currentUser.name}`}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-              value={desc}
-            />
+              <img src={"/public/upload/" + currentUser.profilePic} alt="" />
+              <input
+                type="text"
+                placeholder={`Whats on your mind ${currentUser.name}`}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+                value={desc}
+              />
             </div>
             <div className="right">
-              { file && <img className="file" src={URL.createObjectURL(file)} />}
+              {file && <img className="file" src={URL.createObjectURL(file)} />}
             </div>
           </div>
           <input
-                type="file"
-                id="file"
-                style={{display: "none" }}
-                ref={fileInputRef}
-                onChange={(e) => {
-                  setFile(e.target.files[0]);
-                }}
-              />
+            type="file"
+            id="file"
+            style={{ display: "none" }}
+            ref={fileInputRef}
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+            }}
+          />
           <div className="upload-section">
-          
             <div className="left">
-              
               <div className="item">
                 <div className="icon">
                   <AddPhotoAlternateIcon />
                 </div>
-                <p onClick={handleAddImageClick} style={{cursor:"pointer"}}>Add Image</p>
+                <p onClick={handleAddImageClick} style={{ cursor: "pointer" }}>
+                  Add Image
+                </p>
               </div>
               <div className="item">
                 <div className="icon">
