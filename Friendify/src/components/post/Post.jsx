@@ -13,7 +13,7 @@ import axios from "axios";
 import { AuthContext } from "../../context/authContext";
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 
-const Post = ({ post }) => {
+const Post = ({ post , fetchData }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const { currentUser, login } = useContext(AuthContext);
 
@@ -24,6 +24,8 @@ const Post = ({ post }) => {
   //---------------------------------------------------------------------------------------------------
 
   const [eachPostData, setEachPostData] = useState([]);
+
+  const [menu, setMenu] = useState(false);
 
   //----------------------------------------------------------------------------------------------------
 
@@ -92,9 +94,24 @@ const Post = ({ post }) => {
         });
     }
   };
+
+  //-------------------------------------------------------------------------------------------
+  const handleDeletePost = () => {
+    axios
+      .delete("http://localhost:8005/api/deletePost/" + post.id, {
+        withCredentials: true,
+      })
+      .then((req) => {
+        console.log(req.data);
+        fetchData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   //----------------------------------------------------------------------------------------------------
   return (
-    <div className="post">
+    <div className="post" style={{ position: "relative" }}>
       <div className="user">
         <div className="userinfo">
           <img
@@ -119,7 +136,19 @@ const Post = ({ post }) => {
             <span className="date">{moment(post.createdAt).fromNow()}</span>
           </div>
         </div>
-        <MoreHorizOutlinedIcon />
+        <MoreHorizOutlinedIcon
+          style={{ color: "blueviolet", fontSize: "30px" }}
+          onClick={() => setMenu(!menu)}
+        />
+
+        {/* delete functionality */}
+        {menu && currentUser.id == post.userId && (
+          <div className="extraToggle" style={{}}>
+            <button className="btnDelete" onClick={handleDeletePost}>
+              Delete
+            </button>
+          </div>
+        )}
       </div>
       <div className="content">
         <p>{post.descr}</p>
@@ -138,7 +167,9 @@ const Post = ({ post }) => {
               onClick={() => checkLikedOrNot(post.id)}
             />
           )}
-          <span style={{ color: "blueviolet",fontSize:'large' }}>{eachPostData.length}</span>
+          <span style={{ color: "blueviolet", fontSize: "large" }}>
+            {eachPostData.length}
+          </span>
 
           <span style={{ color: "blueviolet" }}>Likes</span>
         </div>
@@ -149,9 +180,14 @@ const Post = ({ post }) => {
             }}
             style={{ color: "blueviolet" }}
           />
-          <span style={{ color: "blueviolet" }}onClick={() => {
+          <span
+            style={{ color: "blueviolet" }}
+            onClick={() => {
               setCommentOpen(!commentOpen);
-            }}>12 Messages</span>
+            }}
+          >
+            12 Messages
+          </span>
         </div>
         <div className="item">
           <ShareOutlinedIcon style={{ color: "blueviolet" }} />

@@ -3,7 +3,6 @@ import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 
-
 export const getPosts = (req, res) => {
   let guestUserId = req.query.guestUserId;
   if (!isNaN(guestUserId)) {
@@ -44,8 +43,6 @@ export const getPosts = (req, res) => {
     });
   });
 };
-
-
 
 // export const getPosts = (req, res) => {
 
@@ -135,6 +132,34 @@ export const addPost = (req, res) => {
 
       console.log("Fetched Posts:", data);
       return res.status(200).json(data);
+    });
+  });
+};
+
+export const deletePost = (req, res) => {
+  console.log("delete : ", req.params.postId);
+  const token = req.cookies.accessToken;
+
+  if (!token) return res.status(401).json("Not Logged In!");
+
+  jwt.verify(token, "secretKey", (err, userInfo) => {
+    if (err) return res.status(401).json("Token is not valid!");
+
+    const que = "DELETE FROM posts WHERE id = ? AND userId = ?";
+    const params = [req.params.postId, userInfo.id]; // Parameters to pass to the query
+
+    db.query(que, params, (err, result) => {
+      console.log('delete : ', userInfo.id);
+      if (err) {
+        console.error("Internal db error from deletePost:", err);
+        return res.status(500).json("Internal server error");
+      }
+
+      if (result.affectedRows > 0) {
+        return res.status(200).json("Post deleted successfully");
+      } else {
+        return res.status(404).json("Post not found or you don't have permission to delete it");
+      }
     });
   });
 };

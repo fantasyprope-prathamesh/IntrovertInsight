@@ -113,7 +113,7 @@ const Posts = ({ guestUser }) => {
       <div className="posts">
         {/* error ? "Something Went Wrong" : isPending ? "Loading.."  : */}
         {data?.map((post, indx) => {
-          return <Post post={post} key={post.id} />;
+          return <Post post={post} key={post.id} fetchData={fetchData} />;
         })}
       </div>
     </>

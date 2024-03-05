@@ -11,6 +11,27 @@
     color: themd("textColor");
     padding: 10px;
 
+    .extraToggle{
+      width:80px;
+      height:fit-content;
+      background-color:themed("bgSoft");
+      position:absolute;
+      top:10%;
+      right:3%;
+      display: flex;
+      flex-direction: column;
+      gap: 10;
+
+      .btnDelete{
+        cursor: pointer;
+        border: none;
+        outline:none;
+        background:red;
+        padding:5px 10px;
+        color:white
+      }
+    }
+
     .user {
       display: flex;
       justify-content: space-between;
