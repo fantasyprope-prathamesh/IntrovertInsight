@@ -61,29 +61,33 @@ export const fetchUsers = (req, res) => {
 
   const token = req.cookies.accessToken;
 
-  console.log("value : ",req.params.value)
+  console.log("value : ", req.params.value);
 
   if (!token) return res.status(401).json("Not Logged In!");
 
   jwt.verify(token, "secretKey", (err, userInfo) => {
     if (err) return res.status(401).json("Token is not valid!");
 
-    // SELECT profilePic , username FROM users WHERE id IN 
-    if(req.params.value !== null){
-      let que = ""
-      if(parseInt(req.params.value) === 0){
-        console.log(typeof req.params.value )
-        que = "SELECT profilePic , username FROM users WHERE id IN (SELECT followerUserId FROM relationships WHERE followedUserId = ?)"
-      }else if(parseInt(req.params.value) === 1){
-        que = "SELECT profilePic , username FROM users WHERE id IN (SELECT followedUserId FROM relationships WHERE followerUserId = ?)"
+    if (req.params.value !== null) {
+      let que = "";
+      if (parseInt(req.params.value) === 0) {
+        console.log(typeof req.params.value);
+        que =
+          "SELECT profilePic , username FROM users WHERE id IN (SELECT followerUserId FROM relationships WHERE followedUserId = ?)";
+      } else if (parseInt(req.params.value) === 1) {
+        que =
+          "SELECT profilePic , username FROM users WHERE id IN (SELECT followedUserId FROM relationships WHERE followerUserId = ?)";
+      }else if(parseInt(req.params.value) === 2){
+        que = "SELECT profilePic , username FROM users";
       }
-    
-    db.query(que, [userInfo.id], (err, result) => {
-      if (err) return res.status(401).json("Internal db error from fetchUsers");
 
-      console.log(result);
-      return res.status(200).json(result);
-    });
+      db.query(que, [userInfo.id], (err, result) => {
+        if (err)
+          return res.status(401).json("Internal db error from fetchUsers");
+
+        console.log(result);
+        return res.status(200).json(result);
+      });
     }
   });
 };
