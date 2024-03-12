@@ -70,28 +70,46 @@ const Update = ({ setOpenUpdate, profileUser, fetchUser }) => {
   };
   return (
     <div className="update">
-      Update
-      <form>
-        <input
-          type="file"
-          onChange={(e) => {
-            setCover(e.target.files[0]);
-          }}
-        />
-        <input
-          type="file"
-          onChange={(e) => {
-            setProfile(e.target.files[0]);
-          }}
-        />
-        <input type="text" name="name" onChange={handleChange} />
-        <input type="text" name="city" onChange={handleChange} />
-        <input type="text" name="website" onChange={handleChange} />
+      <div className="title">Update</div>
+      <form className="form">
+        <div className="item">
+          <label htmlFor="name">Username : </label>
+          <input type="text" name="name" onChange={handleChange} />
+        </div>
+        <div className="item">
+          <label htmlFor="city">City : </label>
+          <input type="text" name="city" onChange={handleChange} />
+        </div>
+        <div className="item">
+          <label htmlFor="name">Website : </label>
+          <input type="text" name="website" onChange={handleChange} />
+        </div>
+
+        <div className="" style={{display:'flex',gap:'30px'}}>
+          <label htmlFor="coverPic">Cover Picture :</label>
+          <input
+            name="coverPic"
+            type="file"
+            onChange={(e) => {
+              setCover(e.target.files[0]);
+            }}
+          />
+        </div>
+        <div className=""  style={{display:'flex',gap:'30px'}}>
+          <label htmlFor="profilePic">Profile Picture :</label>
+          <input
+            name="profilePic"
+            type="file"
+            onChange={(e) => {
+              setProfile(e.target.files[0]);
+            }}
+          />
+        </div>
         <button type="submit" onClick={handleSubmit}>
           Update
         </button>
       </form>
-      <button onClick={() => setOpenUpdate(false)}>X</button>
+      <button onClick={() => setOpenUpdate(false)}>Cancel</button>
     </div>
   );
 };

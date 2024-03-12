@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const login = async (inputs) => {
 
-    console.log("i am also trying here",inputs)
+    // console.log("i am also trying here",inputs)
 
     const res = await axios.post("http://localhost:8005/api/auth/login", inputs, {
       withCredentials: true

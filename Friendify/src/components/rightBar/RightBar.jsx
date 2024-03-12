@@ -41,10 +41,9 @@ const RightBar = () => {
 
           {userData?.map((item, indx) => {
             return (
-              
               <div className="user" key={indx}>
                 <div className="userinfo">
-                  <img src={'/public/upload/'+item.profilePic} />
+                  <img src={"/public/upload/" + item.profilePic} />
                   <span>{item.username}</span>
                 </div>
 

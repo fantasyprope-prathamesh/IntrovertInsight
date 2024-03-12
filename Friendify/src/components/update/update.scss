@@ -6,8 +6,64 @@
     right: 0;
     margin: auto;
     width: 50%;
-    height: 50%;
+    // height: 50%;
+    height: fit-content;
     background-color: white;
-    padding: 50px;
+    padding: 20px;
     z-index: 999;
+    border-radius: 5px;
+
+    .title{
+        color: blueviolet;
+        display: flex;
+        background-color: skyblue;
+        align-items: center;
+        padding: 10px 20px;
+        justify-content: center;
+        font-size: large;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .item{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            lable{
+
+            }
+            input{
+                border: 1px solid violet;
+                height: 30px;
+                padding: 0 10px;
+                border-radius: 5px;
+            }
+        }
+        button{
+            outline: none;
+            color: white;
+            background-color: rgb(83, 68, 216);
+            border: none;
+            padding: 10px 0;
+            border-radius: 5px;
+        }
+    
+    }
+
+    
+    button{
+        outline: none;
+        color: white;
+        background-color: rgb(216, 68, 83);
+        border: none;
+        padding: 10px 50px;
+        margin-top: 5px;
+        border-radius: 5px;
+    }
 }

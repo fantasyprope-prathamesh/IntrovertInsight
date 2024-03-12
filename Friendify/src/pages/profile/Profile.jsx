@@ -30,7 +30,7 @@ const Profile = () => {
   });
   //----------------------------------------------------------------------------
 
-  const [openUpdate,setOpenUpdate] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
 
   //-------------------------------------------------------------------------
   const fetchUser = () => {
@@ -56,7 +56,7 @@ const Profile = () => {
       })
       .then((res) => {
         console.log("follow response", res.data.length);
-        if(res.data.length > 0){
+        if (res.data.length > 0) {
           SetRelation("Unfollow");
         }
         // SetRelation("Unfollow");
@@ -64,7 +64,7 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   useEffect(() => {
     fetchUser();
@@ -94,7 +94,7 @@ const Profile = () => {
         .catch((err) => {
           console.log(err);
         });
-    }else if(relation === "Unfollow"){
+    } else if (relation === "Unfollow") {
       axios
         .post(
           "http://localhost:8005/api/relation/unfollow",
@@ -116,7 +116,11 @@ const Profile = () => {
     <div className="profile">
       <div className="images">
         {profileUser && (
-          <img src={"/public/upload/" + profileUser.coverPic} alt="cover" className="cover" />
+          <img
+            src={"/public/upload/" + profileUser.coverPic}
+            alt="cover"
+            className="cover"
+          />
           // "./public/upload/" + post.image
           // <h2 style={{color:'white',fontSize:'20px'}}>{profileUser.coverPic}</h2>
           // IntrovertInsight\Friendify\public\upload\1709477154095Prathamesh Photo.jpg
@@ -161,7 +165,7 @@ const Profile = () => {
               </div>
             </div>
             {currentUser.id == guestUser ? (
-              <button onClick={()=>setOpenUpdate(true)}>Update</button>
+              <button onClick={() => setOpenUpdate(true)}>Update</button>
             ) : (
               <button onClick={handleRelation}>{relation}</button>
             )}
@@ -176,9 +180,13 @@ const Profile = () => {
         <Posts guestUser={guestUser} />
       </div>
       {/* update section  */}
-      {
-        openUpdate &&  <Update setOpenUpdate={setOpenUpdate} profileUser={profileUser} fetchUser={fetchUser} /> 
-      }
+      {openUpdate && (
+        <Update
+          setOpenUpdate={setOpenUpdate}
+          profileUser={profileUser}
+          fetchUser={fetchUser}
+        />
+      )}
     </div>
   );
 };

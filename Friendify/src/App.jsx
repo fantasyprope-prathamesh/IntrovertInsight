@@ -37,7 +37,7 @@ function App() {
     return (
       <>
         <QueryClientProvider client={queryClient}>
-          <div className={`theme-${darkMode ? "dark" : "light"}`}>
+          <div className={`theme-${darkMode ? "dark" : "light"}`}>             
             <NavBar />
             <div style={{ display: "flex" }}>
               <LeftBar />
