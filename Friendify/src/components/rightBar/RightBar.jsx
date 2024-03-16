@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import "./rightBar.scss";
 import UserImg from "../../assets/logo2.png";
 import axios from "axios";
+import { AuthContext } from "../../context/authContext"
 
 const RightBar = () => {
   const [userData, setUserData] = useState([]);
 
+  const { currentUser, login } = useContext(AuthContext);
+
   //-------------------------------------------------------------------------------------
 
-  const fetchUsers = (value) => {
+  const fetchSuggestedUsers = () => {
     axios
-      .get("http://localhost:8005/api/fetchUsers/" + value, {
+      .get("http://localhost:8005/api/fetchSuggestedUsers", {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("Fetched usersfrom RightBar : ", res.data);
+        console.log("Fetched Suggested Usersfrom RightBar : ", res.data);
         setUserData(res.data);
       })
       .catch((err) => {
@@ -25,12 +28,29 @@ const RightBar = () => {
   //------------------------------------------------------------------------------------
 
   useEffect(() => {
-    fetchUsers(2);
+    fetchSuggestedUsers();
   }, []);
 
-  // useEffect(()=>{
-  //   console.log("O patil : ", userData)
-  // },[userData])
+  //----------------------------------------------------------------------------------
+
+
+  const followUser = (guestUser)=>{
+    axios
+        .post(
+          "http://localhost:8005/api/relation/follow",
+          { followerId: currentUser.id, followedId: guestUser },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log("follow response", res);
+          SetRelation("Unfollow");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }
+
+
 
   return (
     <div className="rightbar">
@@ -48,7 +68,7 @@ const RightBar = () => {
                 </div>
 
                 <div className="buttons">
-                  <button>Follow</button>
+                  <button onClick={()=>followUser(item.userId)}>Follow</button>
                   <button>Dismiss</button>
                 </div>
               </div>
