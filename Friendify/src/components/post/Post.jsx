@@ -189,10 +189,10 @@ const Post = ({ post , fetchData }) => {
             12 Messages
           </span>
         </div>
-        <div className="item">
+        {/* <div className="item">
           <ShareOutlinedIcon style={{ color: "blueviolet" }} />
           <span style={{ color: "blueviolet" }}>Share</span>
-        </div>
+        </div> */}
       </div>
 
       {commentOpen && <Comments postId={post.id} />}

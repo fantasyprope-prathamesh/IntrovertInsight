@@ -65,7 +65,7 @@ const NavBar = () => {
             }}
           />
         )}
-        <GridViewOutlinedIcon />
+        {/* <GridViewOutlinedIcon /> */}
         <div className="search">
           <SearchOutlinedIcon />
           <input type="text" placeholder="Search.." />
@@ -74,9 +74,9 @@ const NavBar = () => {
 
       {/* right bar  */}
       <div className="right">
-        <PersonOutlineOutlinedIcon />
+        {/* <PersonOutlineOutlinedIcon />
         <EmailOutlinedIcon />
-        <NotificationsOutlinedIcon />
+        <NotificationsOutlinedIcon /> */}
         <div className="user">
         <img
          src={currentUser ? "/public/upload/" + currentUser.profilePic : UserImg}

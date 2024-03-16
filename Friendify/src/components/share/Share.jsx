@@ -110,7 +110,7 @@ const Share = ({ onChangeData }) => {
                   Add Image
                 </p>
               </div>
-              <div className="item">
+              {/* <div className="item">
                 <div className="icon">
                   <PlaceIcon />
                 </div>
@@ -121,7 +121,7 @@ const Share = ({ onChangeData }) => {
                   <LoyaltyIcon />
                 </div>
                 <p>Tag Friends</p>
-              </div>
+              </div> */}
             </div>
             <div className="right">
               <button onClick={handleClick}>Share</button>
