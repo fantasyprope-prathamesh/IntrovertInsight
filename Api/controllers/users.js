@@ -105,10 +105,13 @@ export const fetchSuggestedUsers = (req, res) => {
   jwt.verify(token, "secretKey", (err, userInfo) => {
     if (err) return res.status(401).json("Token is not valid!");
 
-    const que =
-      "SELECT id as userId, profilePic, username FROM users WHERE id IN (SELECT followerUserId FROM relationships WHERE (followerUserId != ? AND followedUserId != ?) OR ( followerUserId != ?))";
+    // const que =
+    //   "SELECT id as userId, profilePic, username FROM users WHERE id IN (SELECT followerUserId FROM relationships WHERE (followerUserId != ? AND followedUserId != ?) OR ( followerUserId != ?))";
 
-    db.query(que, [userInfo.id,userInfo.id,userInfo.id], (err, result) => {
+    const que =
+      "SELECT id as userId, profilePic, username FROM users WHERE id != ?";
+
+    db.query(que, [userInfo.id], (err, result) => {
       if (err) return res.status(401).json("Internal db error from fetchUsers");
 
       console.log("suggested users", result);

@@ -3,9 +3,16 @@ import "./rightBar.scss";
 import UserImg from "../../assets/logo2.png";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext"
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 
 const RightBar = () => {
   const [userData, setUserData] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    console.log("Userr Data :::: " , userData);
+  },[userData])
 
   const { currentUser, login } = useContext(AuthContext);
 
@@ -63,7 +70,9 @@ const RightBar = () => {
             return (
               <div className="user" key={indx}>
                 <div className="userinfo">
-                  <img src={"/public/upload/" + item.profilePic} />
+                  <img src={"/public/upload/" + item.profilePic}
+                  onClick={()=>navigate("/profile/" + item.userId)}
+                  />
                   <span>{item.username}</span>
                 </div>
 
