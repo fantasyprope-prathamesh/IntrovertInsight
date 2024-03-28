@@ -4,6 +4,7 @@ import UserImg from "../../assets/logo2.png";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext"
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const RightBar = () => {
   const [userData, setUserData] = useState([]);
@@ -57,7 +58,23 @@ const RightBar = () => {
         });
   }
 
+  //------------------------------------------------------------------------------------
 
+  const [searchQuery,setSearchQuery] = useState('');
+
+  useEffect(()=>{
+    if(searchQuery !== ''){
+      setUserData(
+        userData.filter((item) =>
+          item.username.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    );
+    }else{
+      fetchSuggestedUsers();
+    }
+  },[searchQuery])
+
+  //----------------------------------------------------------------------------------
 
   return (
     <div className="rightbar">
@@ -65,6 +82,15 @@ const RightBar = () => {
         {/* first item  */}
         <div className="item">
           <span>Suggestion for you</span>
+
+          <div className="search"
+          // style={{display:'flex',alignContent:'center',gap:'5px',padding:'5px'}}
+          >
+          <SearchOutlinedIcon />
+          <input name="search" type="text" placeholder="Search.."
+          onChange={(e)=>setSearchQuery(e.target.value)}
+          />
+        </div>
 
           {userData?.map((item, indx) => {
             return (

@@ -69,7 +69,7 @@ const LeftBar = () => {
                 followerBgColor("#9BA4B5");
                 followedBgColor("");
               }}
-              style={{ backgroundColor:  followerBgColor && followerBgColor  }}
+              style={{ cursor:'pointer'  }}
             >
               Followers
             </div>
@@ -80,7 +80,7 @@ const LeftBar = () => {
                 followedBgColor("#9BA4B5");
                 followerBgColor("");
               }}
-              style={{ backgroundColor: followedBgColor  }}
+              style={{cursor:'pointer'  }}
             >
               Followed
             </div>
