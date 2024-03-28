@@ -73,10 +73,10 @@ export const fetchUsers = (req, res) => {
       if (parseInt(req.params.value) === 0) {
         console.log(typeof req.params.value);
         que =
-          "SELECT profilePic , username FROM users WHERE id IN (SELECT followerUserId FROM relationships WHERE followedUserId = ?)";
+          "SELECT id as userId, profilePic , username FROM users WHERE id IN (SELECT followerUserId FROM relationships WHERE followedUserId = ?)";
       } else if (parseInt(req.params.value) === 1) {
         que =
-          "SELECT profilePic , username FROM users WHERE id IN (SELECT followedUserId FROM relationships WHERE followerUserId = ?)";
+          "SELECT id as userId, profilePic , username FROM users WHERE id IN (SELECT followedUserId FROM relationships WHERE followerUserId = ?)";
       } else if (parseInt(req.params.value) === 2) {
         que = "SELECT profilePic , username FROM users";
       }

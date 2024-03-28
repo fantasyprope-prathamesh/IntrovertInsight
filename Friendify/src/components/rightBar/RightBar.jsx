@@ -78,7 +78,7 @@ const RightBar = () => {
 
                 <div className="buttons">
                   <button onClick={()=>followUser(item.userId)}>Follow</button>
-                  <button>Dismiss</button>
+                  {/* <button>Dismiss</button> */}
                 </div>
               </div>
             );

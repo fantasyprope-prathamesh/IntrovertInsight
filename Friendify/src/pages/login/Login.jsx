@@ -49,9 +49,7 @@ const Login = () => {
         <div className="left">
           <h1>Welcome Here</h1>
           <p>
-            If you have a specific code editor or IDE in mind, please let me
-            know, and I can provide more detailed instructions on enabling
-            auto-completion for React-related code in that specific editor.
+          Discover, connect, and share. Experience the joy of connecting with friends on our social platform!
           </p>
           <span>Do you have an account?</span>
           <Link to={"/register"}>

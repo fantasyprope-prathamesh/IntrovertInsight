@@ -42,9 +42,9 @@ const LeftBar = () => {
     }
   }, []);
 
-  // useEffect(()=>{
-  //   console.log(users);
-  // },[users])
+  useEffect(()=>{
+    console.log("demooo :",users);
+  },[users])
 
   //---------------------------------------------------------------------------
 
@@ -91,7 +91,8 @@ const LeftBar = () => {
               users?.map((item, index) => {
                 return (
                   <div className="item">
-                    <img src={"/public/upload/" + item.profilePic} alt="" />
+                    <img src={"/public/upload/" + item.profilePic} alt=""
+                    onClick={()=>navigate("/profile/" + item.userId)} />
                     <span>{item.username}</span>
                   </div>
                 );
